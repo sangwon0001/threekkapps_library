@@ -97,7 +97,7 @@ void floodFill(uint32_t x, uint32_t y, uint32_t color, void* bitmapPixels, Andro
     	oldColor = pixels[y*bitmapInfo->width+x];
 
     	// Get red,green and blue values of the old color we like to chnage
-    	alpha = (int) ((color & 0xFF000000) >> 24);
+    	alpha = (int) ((oldColor & 0xFF000000) >> 24);
     	values[0] = (int) ((oldColor & 0xFF0000) >> 16) * alpha / 255; // red
     	values[1] = (int)((oldColor & 0x00FF00) >> 8) * alpha / 255; // Green
     	values[2] = (int) (oldColor & 0x0000FF) * alpha / 255; // Blue
@@ -146,7 +146,7 @@ void floodFill(uint32_t x, uint32_t y, uint32_t color, void* bitmapPixels, Andro
     		while (wx>0 && isPixelValid(pixels[wy*bitmapInfo->width+wx],oldColor,values,tolerance)) {
     			pixels[wy*bitmapInfo->width+wx] = color;
 
-    			if (wy > 0 && pixels[(wy-1)*bitmapInfo->width+wx] == oldColor) {
+    			if (wy > 0 && isPixelValid(pixels[(wy-1)*bitmapInfo->width+wx],oldColor,values,tolerance)) {
     				pixelsX.push(wx);
     				pixelsY.push(wy-1);
 
